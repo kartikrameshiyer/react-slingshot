@@ -15,7 +15,7 @@ jobs:
         - run: npm i
         - save_cache:
             key: "npm-packages"
-            paths:		
+            paths:
               - /src/node_modules
         - run: npm run lint
 
