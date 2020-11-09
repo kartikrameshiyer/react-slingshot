@@ -1,11 +1,11 @@
-  version: 2.1		
-  # Use a package of configuration called an orb.		
-  # Anchors and Alias		
+version: 2.1		
+
+# Anchors and alias. 
 defaults: &defaults		
   docker:		
     - image: circleci/node:13.8.0		
 
-  # Re-usuable commands.		
+
 
 jobs:		
     build:		
