@@ -1,52 +1,52 @@
-version: 2.1		
+version: 2.1
 
 # Anchors and alias. 
-defaults: &defaults		
-  docker:		
-    - image: circleci/node:13.8.0		
+defaults: &defaults
+  docker:
+    - image: circleci/node:13.8.0
 
 
 
-jobs:		
-    build:		
-      <<: *defaults		
-      steps:		
-        - checkout		
-        - run: npm i		
-        - save_cache:		
-            key: "npm-packages"		
+jobs:
+    build:
+      <<: *defaults
+      steps:
+        - checkout
+        - run: npm i
+        - save_cache:
+            key: "npm-packages"
             paths:		
-              - /src/node_modules		
-        - run: npm run lint		
+              - /src/node_modules
+        - run: npm run lint
 
-    test:		
-      <<: *defaults		
-      steps:		
-        - checkout		
-        - restore_cache:		
+    test:
+      <<: *defaults
+      steps:
+        - checkout
+        - restore_cache:
+            key:
+              - "npm-packages"	
+        - run: npm i
+        - run: npm run test
+
+    analyze:
+     <<: *defaults
+      steps:
+        - checkout
+        - restore_cache:
             key:		
-              - "npm-packages"		
-        - run: npm i		
-        - run: npm run test		
+              - "npm-packages"
+        - run: npm audit
 
-    analyze:		
-     <<: *defaults		
-      steps:		
-        - checkout		
-        - restore_cache:		
-            key:		
-              - "npm-packages"		
-        - run: npm audit		
-
-workflows:		
-    # Name the workflow "welcome"		
+workflows:
+    # Name the workflow "welcome"
     continousintegration:		
-      # Run the welcome/run job in its own container		
-      jobs:		
-        - build		
-        - test:		
-            requires:		
-              - build		
-        - analyze:		
+      # Run the welcome/run job in its own container
+      jobs:
+        - build
+        - test:
+            requires:
+              - build
+        - analyze:
             requires:
               - test
